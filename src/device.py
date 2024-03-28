@@ -15,3 +15,19 @@ class Device:
 
     def close(self):
         pass
+
+class Buzz(Device):
+    def __init__(self):
+        super.__init__()
+        print(f"{self.name} init done...")
+
+
+class LED(Device):
+    def __init__(self):
+        super.__init__()
+        print(f"{self.name} init done...")
+
+class Relay(Device):
+    def __init__(self):
+        super.__init__()
+        print(f"{self.name} init done...")

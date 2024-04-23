@@ -14,20 +14,22 @@ class Device:
         GPIO.output(self.pin, 1)
 
     def close(self):
-        pass
+        self.off()
+        GPIO.setup(self.pin, GPIO.IN)
+        GPIO.cleanup()
 
 class Buzz(Device):
-    def __init__(self):
-        super.__init__()
+    def __init__(self, name, pin):
+        super().__init__(name, pin)
         print(f"{self.name} init done...")
 
 
 class LED(Device):
-    def __init__(self):
-        super.__init__()
+    def __init__(self, name, pin):
+        super().__init__(name, pin)
         print(f"{self.name} init done...")
 
 class Relay(Device):
-    def __init__(self):
-        super.__init__()
+    def __init__(self, name, pin):
+        super().__init__(name, pin)
         print(f"{self.name} init done...")

@@ -1,6 +1,9 @@
-import adafruit_dht
-import picamera
 import board
+import smbus
+import adafruit_dht
+import RPi.GPIO as GPIO
+from PyQt5.QtCore import QObject, pyqtSignal
+
 
 class Sensor:
     def __init__(self, name, pin):
@@ -16,30 +19,40 @@ class Sensor:
     def close(self):
         pass
 
-class DHT11(Sensor):
+class DHT11(Sensor, QObject):
     '''
         DHT11 sensor class
     '''
+    temperature_humidity_ready = pyqtSignal(float, float)
+    read_error = pyqtSignal(str)
+
     def __init__(self, name, pin):
-        super().__init__(name, pin)
-        self.operation =  adafruit_dht.DHT11(self.pin)
+        Sensor.__init__(self, name, pin)
+        QObject.__init__(self)
+        self.sensor = adafruit_dht.DHT11(self.pin)
         self.temperature = 0.0
         self.humidity = 0.0
 
     def read(self):
-        self.temperature = self.operation.temperature
-        self.humidity = self.operation.humidity
-        return (self.temperature, self.humidity)
+        try:
+            self.temperature = self.sensor.temperature
+            self.humidity = self.sensor.humidity
+            return (self.temperature, self.humidity)
+        except RuntimeError as error:
+            self.read_error.emit(str(error.args[0]))
+        except Exception as error:
+            self.sensor.exit()
+            self.read_error.emit(str(error))
 
     def close(self):
-        self.operation.exit()
+        self.sensor.exit()
 
 class PCF8591(Sensor):
     def __init__(self, name, pin, smbusNumber):
         super().__init__(name, pin)
         self.address = self.pin
         self.busNumber = smbusNumber
-        self.adc_dac_bus = smbus.SMbus(self.busNumber)
+        self.adc_dac_bus = smbus.SMBus(self.busNumber)
 
     def read(self, channel):
         match channel:
@@ -59,20 +72,70 @@ class PCF8591(Sensor):
         temp = int(val)
         self.adc_dac_bus.write_byte_data(self.address, 0x40, temp)
         
-        
-class Camera:
-    def __init__(self):
-        self.camera = picamera.PiCamera()
 
-    def capture(self, output_path):
-        self.camera.capture(output_path)
+
+class LightSensor(Sensor):
+    '''
+        Light sensor class - Analog Signal Version
+        Output value range 0 - 255
+        The stronger the light the smaller the output value, and vice versa.
+    '''
+    def __init__(self, name, pin, smbusNumber):
+        super().__init__(name, pin)
+        self.pcf8591 = PCF8591(name, pin, smbusNumber)
     
-    def record(self, output_path, duration):
-        self.camera.start_recording(output_path)
-        self.camera.wait_recording(duration)
-        self.camera.stop_recording()
-    
+    def read(self):
+        return self.pcf8591.read(0)
+
+    def write(self, val):
+        self.pcf8591.write(val)
+
     def close(self):
-        self.camera.close()
+        pass 
+
+class Light_dt(Sensor):
+    '''
+        Light sensor class - Digital Signal Version
+        Output value range 0 or 1
+        0 means light, 1 means no light
+    '''
+    def __init__(self, name, pin):
+        super().__init__(name, pin)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin, GPIO.IN)
+        self.light_value = 0
+
+    def read(self):
+        self.light_value = GPIO.input(self.pin)
+        return self.light_value
+
+    def close(self):
+        GPIO.cleanup()
 
 
+class SmokeSensor(Sensor):
+    def __init__(self, name, pin, smbusNumber):
+        super().__init__(name, pin)
+        self.pcf8591 = PCF8591(name, pin, smbusNumber)
+    
+    def read(self):
+        return self.pcf8591.read(1)
+
+    def close(self):
+        pass  
+
+
+def main():
+    dht11 = DHT11("dht11", board.D18)
+    temp, humi = dht11.read()
+    dht11.close()
+    print(temp, humi)
+    light_sensor = LightSensor("light_sensor", 0x48, 1)
+    print(light_sensor.read())
+    light_dt = Light_dt("light_dt", 16)
+    print(light_dt.read())
+    smoke_sensor = SmokeSensor('smoke', 0x48, 1)
+    print(smoke_sensor.read())
+
+if __name__ == "__main__":
+    main()

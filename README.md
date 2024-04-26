@@ -43,17 +43,22 @@ PyQt==5.15.9
 > It is assumed here that your hardware connectivity is in line with that of the project develops.
 
 - Clone the current project code from Github.
+
 `git clone git@github.com:coldinke/factory.git`
+
 - Create a new virtual environment and activate it
+
 ```bash
 python -m venv ./VIRTUAL_NAME
 # bash
 source ./VIRTUAL_NAME/bin/activate
 ```
 - Install project dependencies
+
 `python install -r ./requirements.txt`
 
 - Go to the `src` directory and execute the follow command
+
 `python app.py`
 
 

@@ -83,6 +83,9 @@ Camera: [link](https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf)
 ## Reference
 
 Raspberry Pi: [link](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
+
 Raspberry Pi Pinout: [link](https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf)
+
 GPIO zero: [link](https://gpiozero.readthedocs.io/en/latest/)
+
 Picamera2 [link](https://github.com/raspberrypi/picamera2/blob/main/examples)

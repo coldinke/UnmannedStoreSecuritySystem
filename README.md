@@ -66,13 +66,16 @@ source ./VIRTUAL_NAME/bin/activate
 
 ### Sensor
 
-DHT11: [link](https://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/python-setup)
-Light: [link](https://cloud.tencent.com/developer/article/1705838)
-Smoke: [link](https://cloud.tencent.com/developer/article/1705846)
+- DHT11: [link](https://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/python-setup)
+
+- Light: [link](https://cloud.tencent.com/developer/article/1705838)
+
+- Smoke: [link](https://cloud.tencent.com/developer/article/1705846)
 
 ### Device
 
 LED, Relay, Buzzer: see Reference.
+
 Fan:    [TODO](...)
 
 Camera: [link](https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf)

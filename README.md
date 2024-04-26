@@ -62,6 +62,24 @@ source ./VIRTUAL_NAME/bin/activate
 `python app.py`
 
 
-## Used Sensors
-https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf
-## Thanks
+## Used hardware
+
+### Sensor
+
+DHT11: [link](https://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/python-setup)
+Light: [link](https://cloud.tencent.com/developer/article/1705838)
+Smoke: [link](https://cloud.tencent.com/developer/article/1705846)
+
+### Device
+
+LED, Relay, Buzzer: see Reference.
+Fan:    [TODO](...)
+
+Camera: [link](https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf)
+
+## Reference
+
+Raspberry Pi: [link](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
+Raspberry Pi Pinout: [link](https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf)
+GPIO zero: [link](https://gpiozero.readthedocs.io/en/latest/)
+Picamera2 [link](https://github.com/raspberrypi/picamera2/blob/main/examples)

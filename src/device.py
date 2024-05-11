@@ -27,14 +27,6 @@ class Buzz(Device):
         super().__init__(name, pin)
         print(f"{self.name} init done...")
 
-    # def on(self):
-    #     super().on()
-    
-    # def off(self):
-    #     super().off()
-
-    # def close(self):
-    #     super().close()
 
 class LED(Device):
     def __init__(self, name, pin):
@@ -58,10 +50,6 @@ def main():
     relay.off()
     led.off()
     buzzer.off()
-    # time.sleep(2)
-    # buzzer.on()
-    # time.sleep(2)
-    # buzzer.off()
      
 
 

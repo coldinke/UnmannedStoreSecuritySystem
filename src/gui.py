@@ -197,21 +197,6 @@ class MainWindow(QMainWindow):
         left_layout = QVBoxLayout()
         left_widget.setLayout(left_layout)
 
-        # sensor_button_layout = QVBoxLayout()
-        # self.query_temperature_button = QPushButton('获取温度数据')
-        # self.query_temperature_button.clicked.connect(self.get_temperature_from_sensor)
-        # sensor_button_layout.addWidget(self.query_temperature_button)
-
-        # self.query_illuminance_button = QPushButton('获取光照度数据')
-        # self.query_illuminance_button.clicked.connect(self.get_illuminance_from_sensor)
-        # sensor_button_layout.addWidget(self.query_illuminance_button)
-
-        # self.query_smoke_button = QPushButton('获取烟雾数据')
-        # self.query_smoke_button.clicked.connect(self.get_smoke_from_sensor)
-        # sensor_button_layout.addWidget(self.query_smoke_button)
-
-        # left_layout.addLayout(sensor_button_layout)
-
         sensor_layout = QVBoxLayout()
 
         # 温度传感器

@@ -1,4 +1,5 @@
 import board
+import time
 import smbus
 import adafruit_dht
 import RPi.GPIO as GPIO
@@ -39,7 +40,10 @@ class DHT11(Sensor, QObject):
             self.humidity = self.sensor.humidity
             return (self.temperature, self.humidity)
         except RuntimeError as error:
-            self.read_error.emit(str(error.args[0]))
+            print(error.args[0])
+            time.sleep(2.0)
+            continue
+            # self.read_error.emit(str(error.args[0]))
         except Exception as error:
             self.sensor.exit()
             self.read_error.emit(str(error))
